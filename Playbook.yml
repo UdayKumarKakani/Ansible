@@ -22,7 +22,7 @@
           - httpd
         state: present
     - service: name=httpd state=started enabled=yes
-    - raw: "echo Welcome to in28minutes | sudo tee /var/www/html/index.html"
+    - raw: "echo Welcome to AzureDevops | sudo tee /var/www/html/index.html"
 ---
 - hosts: qa
   tasks:
