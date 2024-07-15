@@ -16,6 +16,9 @@ ansible --list-host dev
 ansible --list-host first
 ansible --list-host \!first
 ansible --list-host qa:dev
+
+ansible-playbook -i hosts playbook.yml
+
 ansible-playbook playbooks/01-ping.yml
 ansible-playbook playbooks/02-shell.yml 
 ansible-playbook playbooks/03-variables.yml 
