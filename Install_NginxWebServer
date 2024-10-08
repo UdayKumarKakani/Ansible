@@ -1,0 +1,51 @@
+Introduction 
+Nginx is a open source web server, nginx has many number of feature like reverse proxy, load balancer, mail proxy, and HTTP cache in addition to being a web server.
+
+Ansible is a collection of software tools that let infrastructure be written in code. Software provisioning, configuration management, and application deployment are all included in the open-source suite.
+
+Prerequisites
+Up and running Ansible server.
+Root access of target machine.
+Internet connectivity with nodes.
+We’ll show you how to use the Ansible automation tool to install the nginx web server on a Ubuntu machine in this post.
+
+Step 1: Creating Nginx Playbook
+We need to create a nginx-playbook.yml, Ansible play is very import to to execute the task one by one.
+
+To create a nginx-playbook.yml
+
+nano nginx-playbook.yml
+Paste the following code.
+
+- hosts: nginxservers
+  become: yes
+  tasks:
+
+    - name: update
+      apt: update_cache=yes   
+   
+    - name: Install Nginx
+      apt: name=nginx state=latest
+
+      notify:
+        - restart nginx
+
+  handlers:
+    - name: restart nginx
+      service: name=nginx state=reloaded
+Save and exit from the text editor, This playbook does the following:
+
+Adds the Nginx repository to the remote server.
+Installs Nginx.
+Starts the Nginx service and enables it to start automatically on boot.
+Note that this is just one example, and the specific details of your playbook will depend on your use case and the specific version of Nginx you’re using.
+
+Step 2: Execute Nginx Playbook
+We are good to execute the nginx-playbook.yml by following the given command.
+
+ansible-playbook nginx-playbook.yml
+
+The above command start the installation of Nginx webs server on target machine.
+
+Step 3: Testing Nginx Web Page
+After installation of Nginx web server using Ansible we can test the apache web server test page on http://localhost or http://IP-ADDRESS 
