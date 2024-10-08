@@ -1,0 +1,60 @@
+Introduction 
+Redis is a distributed, in-memory key-value database, message broker, cache, and in-memory data structure store with optional durability. Strings, lists, maps, sets, sorted sets, HyperLogLogs, bitmaps, streams, and spatial indices are just a few of the abstract data structures that Redis can work with.
+
+Ansible is a collection of software tools that let infrastructure be written in code. Software provisioning, configuration management, and application deployment are all included in the open-source suite.
+
+Prerequisites
+Up and running Ansible server.
+Root access of target machine.
+Internet connectivity with nodes.
+We’ll show you how to use the Ansible automation tool to install the Redis server on a Ubuntu machine in this post.
+
+Step 1: Creating Redis Playbook
+We need to create a redis-playbook.yml, Ansible play is very import to to execute the task one by one.
+
+To create a redis-playbook.yml
+
+nano redis-playbook.yml
+Paste the following code.
+
+- name: Install Redis
+  hosts: redisservers
+  become: true
+  
+  tasks:
+  - name: Update apt-get repo and cache
+    apt: update_cache=yes force_apt_get=yes cache_valid_time=3600  
+  
+  - name: Install Redis
+    apt:
+      name: redis-server
+      state: present
+  
+  - name: Start Redis
+    service:
+      name: redis-server
+      state: started
+      enabled: yes
+Save and exit from the text editor, This playbook does the following:
+
+Adds the Redis repository to the remote server.
+Installs Redis.
+Starts the Redis service and enables it to start automatically on boot.
+Note that this is just one example, and the specific details of your playbook will depend on your use case and the specific version of Redis you’re using.
+
+Step 2: Execute Redis Playbook
+We are good to execute the redis-playbook.yml by following the given command.
+
+ansible-playbook redis-playbook.yml
+
+The above command start the installation of redis server on target machine.
+
+Step 3: Testing Redis 
+Once the Redis installation on ubuntu uisng Ansible we need to execute redis-cli in order to take redis shell and then use ping command to get healthy response.
+
+To login redis.
+
+redis-cli
+To get healthy status.
+
+ping
