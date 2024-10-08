@@ -1,0 +1,50 @@
+Introduction 
+Apache HTTP Server is software for a cross-platform web server that is free and open-source Under the terms of the Apache License 2.0, Under the direction of the Apache Software Foundation, an open community of developers develops and maintains Apache.
+
+Ansible is a collection of software tools that let infrastructure be written in code. Software provisioning, configuration management, and application deployment are all included in the open-source suite.
+
+Prerequisites
+Up and running Ansible server.
+Root access of target machine.
+internet connectivity with nodes.
+In this post, We will show you how to install apache web server on ubuntu machine with Ansible automation tool. 
+
+Step 1: Creating Apache Playbook
+We need to create a apache-playbook.yml, Ansible play is very import to to execute the task one by one.
+
+To create a apache-playbook.yml
+
+nano apache-playbook.yml
+Paste the following code.
+
+- name: Install Apache
+  hosts: apacheservers
+  become: true
+  
+  tasks:
+  - name: Install Apache
+    apt:
+      name: apache2
+      state: present
+  
+  - name: Start Apache
+    service:
+      name: apache2
+      state: started
+      enabled: yes
+Save and exit from the text editor, This playbook does the following:
+
+Installs Apache.
+Starts the Apache service and enables it to start automatically on boot.
+Note that this is just one example, and the specific details of your playbook will depend on your use case and the specific version of Apache you’re using.
+
+Step 2: Execute Apache Playbook
+We are good to execute the apache-playbook.yml by following the given command.
+
+ansible-playbook apache-playbook.yml
+
+The above command start the installation of Apache webs server on target machine.
+
+Step 3: Testing Apache Web Page
+After installation of Apache web server using Ansible we can test the apache web server test page on http://localhost or http://IP-ADDRESS 
+
