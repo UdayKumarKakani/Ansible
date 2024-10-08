@@ -28,10 +28,10 @@ ansible --version
 
 Step 4: Configuration of Inventory File
 Information about the hosts you’ll be managing with Ansible can be found in the inventory file. Your inventory file can contain anywhere from one to several hundred servers, and hosts can be categorized into groups and subgroups. Variables that are only valid for particular hosts or groups are frequently set in the inventory file for use in playbooks and templates. The ansible_python_interpreter variable, which we’ll look at in a moment, is one example of a variable that can also affect how a playbook is run.
-
+1.sudo su
 Open the /etc/ansible/hosts file on your Ansible control node with the text editor of your choice to modify the contents of your default Ansible inventory:
 
-sudo vim /etc/ansible/hosts
+2.nano /etc/ansible/hosts
 Note: Even though Ansible usually makes a default inventory file in the directory etc/ansible/hosts, you can make inventory files anywhere that works better for your needs. When running Ansible commands and playbooks in this situation, you will need to use the -i parameter to specify the path to your custom inventory file. It’s a good idea to use inventory files for each project to avoid running a playbook on the wrong servers.
 
 The default stock document given by the Ansible establishment contains various models that you can use as references for setting up your stock. The following example specifies a group with the name “servers” and three distinct servers, each with its own unique alias: servers one, two, and three Make sure to substitute the IP addresses of your Ansible hosts for the highlighted ones.
