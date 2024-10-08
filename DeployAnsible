@@ -1,0 +1,81 @@
+Introduction
+Ansible – The purpose of configuration management systems is to make it easier for administrators and operations teams to manage a large number of servers. They let you automate control of many different systems from a single location.
+
+In this post, We will know how to install ansible on ubuntu 22.04 LTS.
+
+Step 1: Adding Ansible PPA
+Installing the Ansible software on the machine that will be the Ansible control node is required before you can begin using Ansible to manage your server infrastructure.
+
+Run the following command from your control node to add the personal package archive (PPA) of the official project to your system’s list of sources:
+
+sudo apt-add-repository ppa:ansible/ansible
+
+Step 2: Install Dependencies
+We need to install the dependencies for Ansible, We need to use the following command.
+
+sudo apt-get install aptitude -y
+
+Step 3: Installing Ansible
+We are good to install the Ansible on ubuntu 22.04 LTS, We need to use the following command.
+
+sudo apt-get update
+
+sudo apt-get install ansible -y
+
+After installation of the Ansible package we need to also check the Ansible by using given command.
+
+ansible --version
+
+Step 4: Configuration of Inventory File
+Information about the hosts you’ll be managing with Ansible can be found in the inventory file. Your inventory file can contain anywhere from one to several hundred servers, and hosts can be categorized into groups and subgroups. Variables that are only valid for particular hosts or groups are frequently set in the inventory file for use in playbooks and templates. The ansible_python_interpreter variable, which we’ll look at in a moment, is one example of a variable that can also affect how a playbook is run.
+
+Open the /etc/ansible/hosts file on your Ansible control node with the text editor of your choice to modify the contents of your default Ansible inventory:
+
+sudo vim /etc/ansible/hosts
+Note: Even though Ansible usually makes a default inventory file in the directory etc/ansible/hosts, you can make inventory files anywhere that works better for your needs. When running Ansible commands and playbooks in this situation, you will need to use the -i parameter to specify the path to your custom inventory file. It’s a good idea to use inventory files for each project to avoid running a playbook on the wrong servers.
+
+The default stock document given by the Ansible establishment contains various models that you can use as references for setting up your stock. The following example specifies a group with the name “servers” and three distinct servers, each with its own unique alias: servers one, two, and three Make sure to substitute the IP addresses of your Ansible hosts for the highlighted ones.
+
+SSH connection with pem file example.
+
+[servers]
+server1 ansible_host=192.168.1.10 ansible_user=aftab ansible_ssh_private_key_file=/home/aftab/.ssh/rsa.pem
+
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3
+SSH connection with username and password example.
+
+[servers]
+
+192.168.1.10 ansible_connection=ssh ansible_ssh_user=username ansible_ssh_pass=password
+
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3
+Disable host key checking in ansible configuration file /etc/ansible/ansible.cfg, Open and add the following parameter under [defaults] section.
+
+sudo nano /etc/ansible/ansible.cfg
+[defaults]
+host_key_checking = false
+
+Save and exit from the text editor.
+
+Step 5: Testing with Ansible Ping Module
+We are good to test ansible ping module to test our ansible node is responding or not, We need to execute the following command for the same.
+
+ansible all -m ping 
+We should get out put like this.
+
+
+Step 6: Ansible Ad-Hoc
+You can begin running ad-hoc commands and playbooks on your servers after confirming that your Ansible control node can communicate with your hosts.
+
+Any order that you would ordinarily execute on a distant server over SSH can be run with Ansible on the servers determined in your stock document. For instance, you can monitor disk usage on each server using:
+
+ansible all -a "df -h" -u root
+We should get output like this.
+
+
+Conclusion
+You’ve installed Ansible and configured an inventory file to run ad hoc commands from an Ansible Control Node thanks to the instructions in this article.
+
+You can run any command or playbook you want on those hosts once you’ve verified you can connect to and govern your infrastructure from a central Ansible controller workstation, if you still have questions, please post them in the comments section below.
